@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfalah Connect - Connect with Your Local Masjid</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #009E60;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #009E60, #00C291);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .lang-toggle {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #009E60, #00C291);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .lang-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 158, 96, 0.3);
+        }
+
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .hero-content {
+            margin-right: 0;
+            margin-left: auto;
+        }
+
+        [dir="rtl"] .btn-group {
+            justify-content: flex-end;
+        }
+
+        [dir="rtl"] .step {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .reg-step {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .feedback-step {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .guide-timeline {
+            padding-left: 0;
+            padding-right: 40px;
+        }
+
+        [dir="rtl"] .guide-timeline::before {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .timeline-item::before {
+            left: auto;
+            right: -49px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #009E60 0%, #00C291 100%);
+            padding: 120px 5% 80px;
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            right: -100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 600px;
+            height: 600px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M100 20 L105 80 L100 90 L95 80 Z M80 90 L120 90 L115 100 L85 100 Z M90 100 L110 100 L105 180 L95 180 Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat center;
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #009E60;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #009E60;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 5%;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 158, 96, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 158, 96, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #009E60, #00C291);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 5%;
+            background: white;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: #fff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #009E60, #00C291);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* App Guide Section */
+        .app-guide {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .guide-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .guide-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #009E60, #00C291);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -49px;
+            top: 24px;
+            width: 16px;
+            height: 16px;
+            background: #009E60;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(0, 158, 96, 0.2);
+        }
+
+        .timeline-item strong {
+            color: #009E60;
+            font-weight: 600;
+        }
+
+        /* Masjid Registration Section */
+        .masjid-registration {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, rgba(0, 158, 96, 0.05), rgba(0, 194, 145, 0.05));
+        }
+
+        .registration-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .registration-steps {
+            padding: 2rem;
+        }
+
+        .reg-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .reg-step-num {
+            width: 32px;
+            height: 32px;
+            background: #009E60;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .reg-step p {
+            color: #555;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+
+        .phone-mockup {
+            text-align: center;
+        }
+
+        .phone-frame {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: linear-gradient(135deg, #009E60, #00C291);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 158, 96, 0.3);
+            position: relative;
+        }
+
+        .phone-screen {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-screen svg {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1rem;
+        }
+
+        /* Feedback Section */
+        .feedback-section {
+            padding: 80px 5%;
+            background: white;
+        }
+
+        .feedback-process {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .feedback-step {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 16px;
+            align-items: center;
+        }
+
+        .feedback-icon {
+            width: 64px;
+            height: 64px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #009E60 0%, #00C291 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 5%;
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .registration-container {
+                grid-template-columns: 1fr;
+            }
+
+            .guide-timeline {
+                padding-left: 30px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .phone-mockup {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🕌</div>
+            <span>Alfalah Connect</span>
+        </div>
+        <button class="lang-toggle" onclick="toggleLanguage()">
+            <span id="langBtn">اردو | Urdu</span>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Alfalah Connect</h1>
+            <p>Designed to connect the Muslim community with their local Masjid, providing easy access to prayer times, locations, and essential information.</p>
+            <div class="btn-group">
+                <a href="#register" class="btn btn-primary">Register your Masjid</a>
+                <a href="#find" class="btn btn-secondary">Find Nearby Masjid</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Core Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>Find Nearby Masajid</h3>
+                <p>Locate Masajid in your area with detailed information including address, contact details, and directions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🕐</div>
+                <h3>Prayer Times</h3>
+                <p>Access accurate and up-to-date prayer times regularly updated by Masjid administration directly into a prayer.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Community Connect</h3>
+                <p>Connect with your local Masjid community and stay updated with Masjid activities and events.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2 class="section-title">How It Works?</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Masjid Registration</h4>
+                    <p>Mosques can easily be registered via a Masjid administrator through our admin form.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Admin Verification</h4>
+                    <p>Our admin team will verify all submissions to ensure data quality & authenticity.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Community Access</h4>
+                    <p>Approved Masjid appear in our directory, accessible to the entire Muslim community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Guide -->
+    <section class="app-guide">
+        <h2 class="section-title">How to Use the Alfalah App</h2>
+        <div class="guide-timeline">
+            <div class="timeline-item">
+                <strong>Step 1:</strong> Download the Alfalah App from the Play Store and open it.
+            </div>
+            <div class="timeline-item">
+                <strong>Step 2:</strong> Log in or sign up for an account.
+            </div>
+            <div class="timeline-item">
+                <strong>Step 3:</strong> Nearby Masajid will automatically appear on your screen.
+            </div>
+            <div class="timeline-item">
+                <strong>Step 4:</strong> Select a Masjid to view its location, directions, and prayer timings.
+            </div>
+            <div class="timeline-item">
+                <strong>Step 5:</strong> You can also search for a specific Masjid using the search bar.
+            </div>
+        </div>
+    </section>
+
+    <!-- Masjid Registration -->
+    <section class="masjid-registration" id="register">
+        <h2 class="section-title">How to Register Your Masjid</h2>
+        <div class="registration-container">
+            <div class="registration-steps">
+                <div class="reg-step">
+                    <div class="reg-step-num">1</div>
+                    <p>Download and open the Alfalah App from the Play Store.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">2</div>
+                    <p>If you don't have an account, tap Sign Up and enter your Name, Phone Number, Email (optional), and Password.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">3</div>
+                    <p>After signing up, log in using your phone number and password.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">4</div>
+                    <p>Go to Settings → About Us → Register Your Masjid.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">5</div>
+                    <p>Review the registration details carefully (the form is also available in Urdu).</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">6</div>
+                    <p>Check the box to continue. The registration form will appear.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">7</div>
+                    <p>Fill in all required information.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">8</div>
+                    <p>If you're not the Imam, check the relevant box and enter the Imam's information.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">9</div>
+                    <p>Submit the form. The admin team will review it before publication.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">10</div>
+                    <p>Once approved, your Masjid will be listed in the app.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">11</div>
+                    <p>You can later edit your Masjid's information from Settings → My Masjid.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">12</div>
+                    <p>The Focal Person or Imam can add affiliates (authorized members) through the My Masjid section.</p>
+                </div>
+                <div class="reg-step">
+                    <div class="reg-step-num">13</div>
+                    <p>Affiliates can also make updates or review user-submitted changes (such as timing corrections).</p>
+                </div>
+            </div>
+            <div class="phone-mockup">
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#009E60" stroke-width="2">
+                            <path d="M12 2L15 8L21 9L16.5 14L18 21L12 17.5L6 21L7.5 14L3 9L9 8L12 2Z"/>
+                        </svg>
+                        <h3 style="color: #009E60; margin-bottom: 0.5rem;">Register Today</h3>
+                        <p style="color: #666; font-size: 0.9rem;">Follow the steps to get your Masjid listed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="feedback-section">
+        <h2 class="section-title">Submitting Feedback</h2>
+        <div class="feedback-process">
+            <div class="feedback-step">
+                <div class="feedback-icon">🕌</div>
+                <p>If you notice incorrect prayer timings for your Masjid, open the Masjid's page in the app.</p>
+            </div>
+            <div class="feedback-step">
+                <div class="feedback-icon">✏️</div>
+                <p>Tap the Edit Timing option and enter the correct timings, then submit your feedback.</p>
+            </div>
+            <div class="feedback-step">
+                <div class="feedback-icon">🔔</div>
+                <p>A notification will be sent to the Masjid's Administration for review.</p>
+            </div>
+            <div class="feedback-step">
+                <div class="feedback-icon">✅</div>
+                <p>They will review your submission and decide whether to accept or reject it.</p>
+            </div>
+            <div class="feedback-step">
+                <div class="feedback-icon">📱</div>
+                <p>If accepted, the updated timings will be displayed in the app for all users.</p>
+            </div>
+            <div class="feedback-step">
+                <div class="feedback-icon">👥</div>
+                <p>All relevant Masjid admins (Imam, Focal Person, affiliates) will receive a notification about the change.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="find">
+        <h2>Join Our Community Platform</h2>
+        <p>Whether you're a Masjid administrator looking to register your Masjid, or a community member searching for nearby prayer locations</p>
+        <div class="btn-group" style="justify-content: center;">
+            <a href="#register" class="btn btn-primary">Register your Masjid</a>
+            <a href="#" class="btn btn-secondary">Find Nearby Masjid</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem; color: white;">
+            <div class="logo-icon">🕌</div>
+            <span>Alfalah Connect</span>
+        </div>
+        <p>&copy; 2025 Alfalah Connect. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                heroTitle: "Alfalah Connect",
+                heroDesc: "Designed to connect the Muslim community with their local Masjid, providing easy access to prayer times, locations, and essential information.",
+                btnRegister: "Register your Masjid",
+                btnFind: "Find Nearby Masjid",
+                featureTitle: "Core Features",
+                feature1Title: "Find Nearby Masajid",
+                feature1Desc: "Locate Masajid in your area with detailed information including address, contact details, and directions.",
+                feature2Title: "Prayer Times",
+                feature2Desc: "Access accurate and up-to-date prayer times regularly updated by Masjid administration directly into a prayer.",
+                feature3Title: "Community Connect",
+                feature3Desc: "Connect with your local Masjid community and stay updated with Masjid activities and events.",
+                howWorksTitle: "How It Works?",
+                step1Title: "Masjid Registration",
+                step1Desc: "Mosques can easily be registered via a Masjid administrator through our admin form.",
+                step2Title: "Admin Verification",
+                step2Desc: "Our admin team will verify all submissions to ensure data quality & authenticity.",
+                step3Title: "Community Access",
+                step3Desc: "Approved Masjid appear in our directory, accessible to the entire Muslim community.",
+                appGuideTitle: "How to Use the Alfalah App",
+                guide1: "Download the Alfalah App from the Play Store and open it.",
+                guide2: "Log in or sign up for an account.",
+                guide3: "Nearby Masajid will automatically appear on your screen.",
+                guide4: "Select a Masjid to view its location, directions, and prayer timings.",
+                guide5: "You can also search for a specific Masjid using the search bar.",
+                regTitle: "How to Register Your Masjid",
+                reg1: "Download and open the Alfalah App from the Play Store.",
+                reg2: "If you don't have an account, tap Sign Up and enter your Name, Phone Number, Email (optional), and Password.",
+                reg3: "After signing up, log in using your phone number and password.",
+                reg4: "Go to Settings → About Us → Register Your Masjid.",
+                reg5: "Review the registration details carefully (the form is also available in Urdu).",
+                reg6: "Check the box to continue. The registration form will appear.",
+                reg7: "Fill in all required information.",
+                reg8: "If you're not the Imam, check the relevant box and enter the Imam's information.",
+                reg9: "Submit the form. The admin team will review it before publication.",
+                reg10: "Once approved, your Masjid will be listed in the app.",
+                reg11: "You can later edit your Masjid's information from Settings → My Masjid.",
+                reg12: "The Focal Person or Imam can add affiliates (authorized members) through the My Masjid section.",
+                reg13: "Affiliates can also make updates or review user-submitted changes (such as timing corrections).",
+                phoneTitle: "Register Today",
+                phoneDesc: "Follow the steps to get your Masjid listed",
+                feedbackTitle: "Submitting Feedback",
+                feedback1: "If you notice incorrect prayer timings for your Masjid, open the Masjid's page in the app.",
+                feedback2: "Tap the Edit Timing option and enter the correct timings, then submit your feedback.",
+                feedback3: "A notification will be sent to the Masjid's Administration for review.",
+                feedback4: "They will review your submission and decide whether to accept or reject it.",
+                feedback5: "If accepted, the updated timings will be displayed in the app for all users.",
+                feedback6: "All relevant Masjid admins (Imam, Focal Person, affiliates) will receive a notification about the change.",
+                ctaTitle: "Join Our Community Platform",
+                ctaDesc: "Whether you're a Masjid administrator looking to register your Masjid, or a community member searching for nearby prayer locations",
+                footerText: "© 2025 Alfalah Connect. All rights reserved.",
+                langBtn: "اردو | Urdu"
+            },
+            ur: {
+                heroTitle: "الفلاح کنکٹ",
+                heroDesc: "مسلم کمیونٹی کو ان کی مقامی مسجد سے جوڑنے کے لیے ڈیزائن کیا گیا ہے، جو نماز کے اوقات، مقامات اور ضروری معلومات تک آسان رسائی فراہم کرتا ہے۔",
+                btnRegister: "اپنی مسجد رجسٹر کریں",
+                btnFind: "قریبی مسجد تلاش کریں",
+                featureTitle: "بنیادی خصوصیات",
+                feature1Title: "قریبی مساجد تلاش کریں",
+                feature1Desc: "اپنے علاقے میں مساجد کو تفصیلی معلومات کے ساتھ تلاش کریں جن میں پتہ، رابطہ کی تفصیلات اور سمت شامل ہیں۔",
+                feature2Title: "نماز کے اوقات",
+                feature2Desc: "مسجد کی انتظامیہ کی طرف سے باقاعدگی سے اپ ڈیٹ کیے جانے والے درست اور تازہ ترین نماز کے اوقات تک رسائی حاصل کریں۔",
+                feature3Title: "کمیونٹی کنکٹ",
+                feature3Desc: "اپنی مقامی مسجد کمیونٹی سے جڑیں اور مسجد کی سرگرمیوں اور تقریبات سے باخبر رہیں۔",
+                howWorksTitle: "یہ کیسے کام کرتا ہے؟",
+                step1Title: "مسجد کی رجسٹریشن",
+                step1Desc: "مساجد کو ہمارے ایڈمن فارم کے ذریعے مسجد منتظم کے ذریعے آسانی سے رجسٹر کیا جا سکتا ہے۔",
+                step2Title: "ایڈمن کی توثیق",
+                step2Desc: "ہماری ایڈمن ٹیم ڈیٹا کے معیار اور صداقت کو یقینی بنانے کے لیے تمام جمع کرائی گئی معلومات کی تصدیق کرے گی۔",
+                step3Title: "کمیونٹی تک رسائی",
+                step3Desc: "منظور شدہ مساجد ہماری ڈائریکٹری میں ظاہر ہوتی ہیں، جو پوری مسلم کمیونٹی کے لیے قابل رسائی ہے۔",
+                appGuideTitle: "الفلاح ایپ استعمال کرنے کا طریقہ",
+                guide1: "پلے اسٹور سے الفلاح ایپ ڈاؤن لوڈ کریں اور اسے کھولیں۔",
+                guide2: "لاگ ان کریں یا اکاؤنٹ کے لیے سائن اپ کریں۔",
+                guide3: "قریبی مساجد خودکار طور پر آپ کی اسکرین پر ظاہر ہوں گی۔",
+                guide4: "کسی مسجد کو منتخب کریں تاکہ اس کا مقام، سمت اور نماز کے اوقات دیکھیں۔",
+                guide5: "آپ سرچ بار استعمال کرتے ہوئے کسی مخصوص مسجد کو بھی تلاش کر سکتے ہیں۔",
+                regTitle: "اپنی مسجد رجسٹر کرنے کا طریقہ",
+                reg1: "پلے اسٹور سے الفلاح ایپ ڈاؤن لوڈ کریں اور کھولیں۔",
+                reg2: "اگر آپ کے پاس اکاؤنٹ نہیں ہے تو سائن اپ پر ٹیپ کریں اور اپنا نام، فون نمبر، ای میل (اختیاری) اور پاس ورڈ درج کریں۔",
+                reg3: "سائن اپ کرنے کے بعد، اپنے فون نمبر اور پاس ورڈ کا استعمال کرتے ہوئے لاگ ان کریں۔",
+                reg4: "سیٹنگز → ہمارے بارے میں → اپنی مسجد رجسٹر کریں پر جائیں۔",
+                reg5: "رجسٹریشن کی تفصیلات کا بغور جائزہ لیں (فارم اردو میں بھی دستیاب ہے)۔",
+                reg6: "جاری رکھنے کے لیے باکس پر نشان لگائیں۔ رجسٹریشن فارم ظاہر ہوگا۔",
+                reg7: "تمام ضروری معلومات بھریں۔",
+                reg8: "اگر آپ امام نہیں ہیں تو متعلقہ باکس کو چیک کریں اور امام کی معلومات درج کریں۔",
+                reg9: "فارم جمع کروائیں۔ ایڈمن ٹیم اشاعت سے پہلے اس کا جائزہ لے گی۔",
+                reg10: "منظور ہونے کے بعد، آپ کی مسجد ایپ میں درج ہو جائے گی۔",
+                reg11: "آپ بعد میں سیٹنگز → میری مسجد سے اپنی مسجد کی معلومات میں ترمیم کر سکتے ہیں۔",
+                reg12: "فوکل پرسن یا امام میری مسجد سیکشن کے ذریعے منسلکین (مجاز اراکین) شامل کر سکتے ہیں۔",
+                reg13: "منسلکین بھی اپ ڈیٹس کر سکتے ہیں یا صارف کی طرف سے جمع کرائی گئی تبدیلیوں کا جائزہ لے سکتے ہیں (جیسے اوقات کی درستگی)۔",
+                phoneTitle: "آج ہی رجسٹر کریں",
+                phoneDesc: "اپنی مسجد کو درج کروانے کے لیے مراحل پر عمل کریں",
+                feedbackTitle: "رائے جمع کروانا",
+                feedback1: "اگر آپ کو اپنی مسجد کے نماز کے اوقات میں غلطی نظر آئے تو ایپ میں مسجد کا صفحہ کھولیں۔",
+                feedback2: "ایڈٹ ٹائمنگ آپشن پر ٹیپ کریں اور صحیح اوقات درج کریں، پھر اپنی رائے جمع کروائیں۔",
+                feedback3: "مسجد کی انتظامیہ کو جائزے کے لیے نوٹیفکیشن بھیجی جائے گی۔",
+                feedback4: "وہ آپ کی جمع کرائی گئی معلومات کا جائزہ لیں گے اور قبول یا مسترد کرنے کا فیصلہ کریں گے۔",
+                feedback5: "اگر قبول کیا گیا تو، اپ ڈیٹ شدہ اوقات تمام صارفین کے لیے ایپ میں ظاہر ہوں گے۔",
+                feedback6: "تمام متعلقہ مسجد ایڈمنز (امام، فوکل پرسن، منسلکین) کو تبدیلی کے بارے میں نوٹیفکیشن موصول ہوگی۔",
+                ctaTitle: "ہماری کمیونٹی پلیٹ فارم میں شامل ہوں",
+                ctaDesc: "چاہے آپ اپنی مسجد رجسٹر کرنے کے خواہاں مسجد منتظم ہوں، یا قریبی نماز کی جگہیں تلاش کرنے والے کمیونٹی ممبر",
+                footerText: "© 2025 الفلاح کنکٹ۔ تمام حقوق محفوظ ہیں۔",
+                langBtn: "English | انگریزی"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ur' : 'en';
+            const t = translations[currentLang];
+            
+            // Update direction
+            document.body.dir = currentLang === 'ur' ? 'rtl' : 'ltr';
+            
+            // Update all text content
+            document.querySelector('.hero h1').textContent = t.heroTitle;
+            document.querySelector('.hero p').textContent = t.heroDesc;
+            document.querySelectorAll('.btn-primary')[0].textContent = t.btnRegister;
+            document.querySelectorAll('.btn-secondary')[0].textContent = t.btnFind;
+            
+            document.querySelectorAll('.section-title')[0].textContent = t.featureTitle;
+            document.querySelectorAll('.feature-card h3')[0].textContent = t.feature1Title;
+            document.querySelectorAll('.feature-card p')[0].textContent = t.feature1Desc;
+            document.querySelectorAll('.feature-card h3')[1].textContent = t.feature2Title;
+            document.querySelectorAll('.feature-card p')[1].textContent = t.feature2Desc;
+            document.querySelectorAll('.feature-card h3')[2].textContent = t.feature3Title;
+            document.querySelectorAll('.feature-card p')[2].textContent = t.feature3Desc;
+            
+            document.querySelectorAll('.section-title')[1].textContent = t.howWorksTitle;
+            document.querySelectorAll('.step-content h4')[0].textContent = t.step1Title;
+            document.querySelectorAll('.step-content p')[0].textContent = t.step1Desc;
+            document.querySelectorAll('.step-content h4')[1].textContent = t.step2Title;
+            document.querySelectorAll('.step-content p')[1].textContent = t.step2Desc;
+            document.querySelectorAll('.step-content h4')[2].textContent = t.step3Title;
+            document.querySelectorAll('.step-content p')[2].textContent = t.step3Desc;
+            
+            document.querySelectorAll('.section-title')[2].textContent = t.appGuideTitle;
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems[0].innerHTML = `<strong>${currentLang === 'en' ? 'Step 1:' : 'مرحلہ 1:'}</strong> ${t.guide1}`;
+            timelineItems[1].innerHTML = `<strong>${currentLang === 'en' ? 'Step 2:' : 'مرحلہ 2:'}</strong> ${t.guide2}`;
+            timelineItems[2].innerHTML = `<strong>${currentLang === 'en' ? 'Step 3:' : 'مرحلہ 3:'}</strong> ${t.guide3}`;
+            timelineItems[3].innerHTML = `<strong>${currentLang === 'en' ? 'Step 4:' : 'مرحلہ 4:'}</strong> ${t.guide4}`;
+            timelineItems[4].innerHTML = `<strong>${currentLang === 'en' ? 'Step 5:' : 'مرحلہ 5:'}</strong> ${t.guide5}`;
+            
+            document.querySelectorAll('.section-title')[3].textContent = t.regTitle;
+            const regSteps = document.querySelectorAll('.reg-step p');
+            regSteps[0].textContent = t.reg1;
+            regSteps[1].textContent = t.reg2;
+            regSteps[2].textContent = t.reg3;
+            regSteps[3].textContent = t.reg4;
+            regSteps[4].textContent = t.reg5;
+            regSteps[5].textContent = t.reg6;
+            regSteps[6].textContent = t.reg7;
+            regSteps[7].textContent = t.reg8;
+            regSteps[8].textContent = t.reg9;
+            regSteps[9].textContent = t.reg10;
+            regSteps[10].textContent = t.reg11;
+            regSteps[11].textContent = t.reg12;
+            regSteps[12].textContent = t.reg13;
+            
+            document.querySelector('.phone-screen h3').textContent = t.phoneTitle;
+            document.querySelector('.phone-screen p').textContent = t.phoneDesc;
+            
+            document.querySelectorAll('.section-title')[4].textContent = t.feedbackTitle;
+            const feedbackSteps = document.querySelectorAll('.feedback-step p');
+            feedbackSteps[0].textContent = t.feedback1;
+            feedbackSteps[1].textContent = t.feedback2;
+            feedbackSteps[2].textContent = t.feedback3;
+            feedbackSteps[3].textContent = t.feedback4;
+            feedbackSteps[4].textContent = t.feedback5;
+            feedbackSteps[5].textContent = t.feedback6;
+            
+            document.querySelector('.cta-section h2').textContent = t.ctaTitle;
+            document.querySelector('.cta-section p').textContent = t.ctaDesc;
+            document.querySelectorAll('.btn-primary')[1].textContent = t.btnRegister;
+            document.querySelectorAll('.btn-secondary')[1].textContent = t.btnFind;
+            
+            document.querySelector('footer p').textContent = t.footerText;
+            document.getElementById('langBtn').textContent = t.langBtn;
+        }
+    </script>
+</body>
+</html>
