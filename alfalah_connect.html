@@ -42,6 +42,11 @@
             color: #009E60;
         }
 
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
         .logo-icon {
             width: 32px;
             height: 32px;
@@ -534,7 +539,7 @@
     <!-- Navigation -->
     <nav>
         <div class="logo">
-            <div class="logo-icon">🕌</div>
+            <img src="thumbnail.png" alt="">
             <span>Alfalah Connect</span>
         </div>
         <button class="lang-toggle" onclick="toggleLanguage()">
@@ -549,7 +554,8 @@
             <p>Designed to connect the Muslim community with their local Masjid, providing easy access to prayer times, locations, and essential information.</p>
             <div class="btn-group">
                 <a href="#register" class="btn btn-primary">Register your Masjid</a>
-                <a href="#find" class="btn btn-secondary">Find Nearby Masjid</a>
+                <!-- DOWNLOAD BUTTON #1 - Replace the href with your Play Store link -->
+                <a href="https://play.google.com/store/apps/details?id=YOUR_APP_PACKAGE_NAME" target="_blank" class="btn btn-secondary">Download the App</a>
             </div>
         </div>
     </section>
@@ -564,7 +570,7 @@
                 <p>Locate Masajid in your area with detailed information including address, contact details, and directions.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🕐</div>
+                <div class="feature-icon">🕌</div>
                 <h3>Prayer Times</h3>
                 <p>Access accurate and up-to-date prayer times regularly updated by Masjid administration directly into a prayer.</p>
             </div>
@@ -687,8 +693,12 @@
             <div class="phone-mockup">
                 <div class="phone-frame">
                     <div class="phone-screen">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#009E60" stroke-width="2">
-                            <path d="M12 2L15 8L21 9L16.5 14L18 21L12 17.5L6 21L7.5 14L3 9L9 8L12 2Z"/>
+                        <svg viewBox="0 0 200 200" fill="none" style="width: 120px; height: 120px;">
+                            <!-- Crescent Moon (larger, circular) -->
+                            <circle cx="100" cy="100" r="80" fill="#009E60"/>
+                            <circle cx="115" cy="85" r="65" fill="white"/>
+                            <!-- Star positioned higher in the opening -->
+                            <path d="M 135 64 L 143 82 L 163 84 L 149 97 L 153 117 L 135 107 L 117 117 L 121 97 L 107 84 L 127 82 Z" fill="#009E60"/>
                         </svg>
                         <h3 style="color: #009E60; margin-bottom: 0.5rem;">Register Today</h3>
                         <p style="color: #666; font-size: 0.9rem;">Follow the steps to get your Masjid listed</p>
@@ -700,7 +710,7 @@
 
     <!-- Feedback Section -->
     <section class="feedback-section">
-        <h2 class="section-title">Submitting Feedback</h2>
+        <h2 class="section-title">Help Maintain Accurate Prayer Timings</h2>
         <div class="feedback-process">
             <div class="feedback-step">
                 <div class="feedback-icon">🕌</div>
@@ -730,19 +740,19 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section" id="find">
+    <section class="cta-section" id="download">
         <h2>Join Our Community Platform</h2>
         <p>Whether you're a Masjid administrator looking to register your Masjid, or a community member searching for nearby prayer locations</p>
         <div class="btn-group" style="justify-content: center;">
-            <a href="#register" class="btn btn-primary">Register your Masjid</a>
-            <a href="#" class="btn btn-secondary">Find Nearby Masjid</a>
+            <!-- DOWNLOAD BUTTON #2 - Replace the href with your Play Store link -->
+            <a href="https://play.google.com/store/apps/details?id=YOUR_APP_PACKAGE_NAME" target="_blank" class="btn btn-primary">Download the App</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="logo" style="justify-content: center; margin-bottom: 1rem; color: white;">
-            <div class="logo-icon">🕌</div>
+            <img src="thumbnail.png" alt="">
             <span>Alfalah Connect</span>
         </div>
         <p>&copy; 2025 Alfalah Connect. All rights reserved.</p>
@@ -754,7 +764,7 @@
                 heroTitle: "Alfalah Connect",
                 heroDesc: "Designed to connect the Muslim community with their local Masjid, providing easy access to prayer times, locations, and essential information.",
                 btnRegister: "Register your Masjid",
-                btnFind: "Find Nearby Masjid",
+                btnFind: "Download the App",
                 featureTitle: "Core Features",
                 feature1Title: "Find Nearby Masajid",
                 feature1Desc: "Locate Masajid in your area with detailed information including address, contact details, and directions.",
@@ -791,7 +801,7 @@
                 reg13: "Affiliates can also make updates or review user-submitted changes (such as timing corrections).",
                 phoneTitle: "Register Today",
                 phoneDesc: "Follow the steps to get your Masjid listed",
-                feedbackTitle: "Submitting Feedback",
+                feedbackTitle: "Help Maintain Accurate Prayer Timings",
                 feedback1: "If you notice incorrect prayer timings for your Masjid, open the Masjid's page in the app.",
                 feedback2: "Tap the Edit Timing option and enter the correct timings, then submit your feedback.",
                 feedback3: "A notification will be sent to the Masjid's Administration for review.",
@@ -807,7 +817,7 @@
                 heroTitle: "الفلاح کنکٹ",
                 heroDesc: "مسلم کمیونٹی کو ان کی مقامی مسجد سے جوڑنے کے لیے ڈیزائن کیا گیا ہے، جو نماز کے اوقات، مقامات اور ضروری معلومات تک آسان رسائی فراہم کرتا ہے۔",
                 btnRegister: "اپنی مسجد رجسٹر کریں",
-                btnFind: "قریبی مسجد تلاش کریں",
+                btnFind: "ایپ ڈاؤن لوڈ کریں",
                 featureTitle: "بنیادی خصوصیات",
                 feature1Title: "قریبی مساجد تلاش کریں",
                 feature1Desc: "اپنے علاقے میں مساجد کو تفصیلی معلومات کے ساتھ تلاش کریں جن میں پتہ، رابطہ کی تفصیلات اور سمت شامل ہیں۔",
@@ -844,7 +854,7 @@
                 reg13: "منسلکین بھی اپ ڈیٹس کر سکتے ہیں یا صارف کی طرف سے جمع کرائی گئی تبدیلیوں کا جائزہ لے سکتے ہیں (جیسے اوقات کی درستگی)۔",
                 phoneTitle: "آج ہی رجسٹر کریں",
                 phoneDesc: "اپنی مسجد کو درج کروانے کے لیے مراحل پر عمل کریں",
-                feedbackTitle: "رائے جمع کروانا",
+                feedbackTitle: "نماز کے درست اوقات برقرار رکھنے میں مدد کریں",
                 feedback1: "اگر آپ کو اپنی مسجد کے نماز کے اوقات میں غلطی نظر آئے تو ایپ میں مسجد کا صفحہ کھولیں۔",
                 feedback2: "ایڈٹ ٹائمنگ آپشن پر ٹیپ کریں اور صحیح اوقات درج کریں، پھر اپنی رائے جمع کروائیں۔",
                 feedback3: "مسجد کی انتظامیہ کو جائزے کے لیے نوٹیفکیشن بھیجی جائے گی۔",
@@ -927,8 +937,7 @@
             
             document.querySelector('.cta-section h2').textContent = t.ctaTitle;
             document.querySelector('.cta-section p').textContent = t.ctaDesc;
-            document.querySelectorAll('.btn-primary')[1].textContent = t.btnRegister;
-            document.querySelectorAll('.btn-secondary')[1].textContent = t.btnFind;
+            document.querySelectorAll('.btn-primary')[1].textContent = t.btnFind;
             
             document.querySelector('footer p').textContent = t.footerText;
             document.getElementById('langBtn').textContent = t.langBtn;
